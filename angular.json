@@ -123,6 +123,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "stocks-app"
+    }
+  },
+  "defaultProject": "stocks-app",
+  "cli": {
+    "analytics": false
+  }
 }
