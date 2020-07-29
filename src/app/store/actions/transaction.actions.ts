@@ -8,7 +8,7 @@ export const getTransactions = createAction(
 
 export const getTransactionsSuccess = createAction(
     '[Transactions] Get Transactions Success',
-    props<{ data: Transaction[] }>()
+    props<{ transactions: Transaction[] }>()
 );
 
 export const getTransactionsFailure = createAction(

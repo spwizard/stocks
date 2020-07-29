@@ -3,7 +3,7 @@ import { environment } from '../../environments/environment';
 import * as fromTransactions from '../store/reducers/transactions.reducer';
 
 export interface State {
-  router: fromTransactions.TransactionState;
+  stockFeature: fromTransactions.TransactionState;
 }
 
 /**
@@ -12,7 +12,7 @@ export interface State {
  * and the current or initial state and return a new immutable state.
  */
 export const reducers: ActionReducerMap<State> = {
-  transactions: fromTransactions.reducer
+  stockFeature: fromTransactions.reducer
 };
 
 // console.log all actions
