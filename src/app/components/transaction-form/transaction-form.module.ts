@@ -5,12 +5,13 @@ import { TransactionFormComponent } from './transaction-form.component';
 import { CommonModule } from '@angular/common';
 
 @NgModule({
-    imports: [
-        ReactiveFormsModule,
-        FormsModule, 
-        CommonModule, ],
-    exports: [TransactionFormComponent],
-    declarations: [TransactionFormComponent],
-    providers: [],
+  imports: [
+    ReactiveFormsModule,
+    FormsModule,
+    CommonModule
+  ],
+  exports: [TransactionFormComponent],
+  declarations: [TransactionFormComponent],
+  providers: [],
 })
 export class TransactionFormModule { }

@@ -7,7 +7,7 @@ import { Transaction } from './store/models/transaction.model';
 import { TransactionFormState } from './components/transaction-form/transaction-form.component';
 import { Actions, ofType } from '@ngrx/effects';
 import { tap } from 'rxjs/operators';
-import { Alert, AlertMessage } from './store/models/alert.model'
+import { Alert, AlertMessage } from './store/models/alert.model';
 
 @Component({
   selector: 'app-root',
@@ -16,13 +16,13 @@ import { Alert, AlertMessage } from './store/models/alert.model'
 })
 export class AppComponent implements OnInit {
   title = 'stocks-app';
-  transactionSubscription$: Observable<Transaction[]>
+  transactionSubscription$: Observable<Transaction[]>;
   isLoading$: Observable<boolean>;
-  isEdit: boolean = false;
+  isEdit = false;
   editableTransaction: Transaction;
   actionSuccess$: Subscription;
   alertType: string;
-  alertMessage: string
+  alertMessage: string;
   cumulativeCashflow$: Observable<number>;
 
   constructor(
@@ -47,17 +47,16 @@ export class AppComponent implements OnInit {
       })).subscribe();
   }
 
-  onDelete(transaction: Transaction) {
-    console.log(transaction);
-    this.store.dispatch(TransactionActions.deleteTransaction({transaction: transaction}))
+  onDelete(transaction: Transaction): void {
+    this.store.dispatch(TransactionActions.deleteTransaction({transaction}));
   }
 
-  onEdit(transaction: Transaction) {
-    this.isEdit = true
-    this.editableTransaction = transaction
+  onEdit(transaction: Transaction): void {
+    this.isEdit = true;
+    this.editableTransaction = transaction;
   }
 
-  onTransactionFormChange(transactionFormState: TransactionFormState){
+  onTransactionFormChange(transactionFormState: TransactionFormState): void{
     if (transactionFormState.isEdit) {
       this.store.dispatch(TransactionActions.updateTransaction({ transaction: transactionFormState.transaction }));
     } else {
@@ -65,26 +64,24 @@ export class AppComponent implements OnInit {
     }
   }
 
-  private setAlertMessage(alertType: string) {
+  private setAlertMessage(alertType: string): void {
     switch (alertType) {
       case '[Transactions] Add Transaction Success':
-        this.alertType = Alert.ADDED
-        this.alertMessage = AlertMessage.ADDED
+        this.alertType = Alert.ADDED;
+        this.alertMessage = AlertMessage.ADDED;
         break;
       case '[Transactions] Delete Transaction Success':
-        this.alertType = Alert.DELETED
-        this.alertMessage = AlertMessage.DELETED
+        this.alertType = Alert.DELETED;
+        this.alertMessage = AlertMessage.DELETED;
         break;
       case '[Transactions] Update Transaction Success':
-        this.alertType = Alert.UPDATED
-        this.alertMessage = AlertMessage.UPDATED
+        this.alertType = Alert.UPDATED;
+        this.alertMessage = AlertMessage.UPDATED;
         this.isEdit = false;
         break;
-    
+
       default:
         break;
     }
   }
-
-
 }

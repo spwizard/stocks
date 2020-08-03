@@ -6,14 +6,14 @@ describe('TransactionFormComponent', () => {
   let component: TransactionFormComponent;
   let fixture: ComponentFixture<TransactionFormComponent>;
   const mockTransaction = {
-    "cashflow": 123,
-    "date": "2020-07-21T15:45:49.958Z",
-    "id": 987,
-    "type": "buy",
-    "value": 123,
-    "security": "BT",
-    "shares": 123
-  }
+    cashflow: 123,
+    date: '2020-07-21T15:45:49.958Z',
+    id: 987,
+    type: 'buy',
+    value: 123,
+    security: 'BT',
+    shares: 123
+  };
   beforeEach(() => {
     const formBuilderStub = () => ({ group: object => ({}) });
     TestBed.configureTestingModule({

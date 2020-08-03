@@ -51,7 +51,7 @@ const transactionReducer = createReducer(
     return {
       ...state,
       transactions: [...state.transactions, transaction],
-    }
+    };
   }),
 
   on(TransactionActions.updateTransactionSuccess, (state, { transaction }) => {
@@ -59,12 +59,12 @@ const transactionReducer = createReducer(
       ...state,
       transactions: state.transactions.map((transactionItem) => {
         if (transactionItem.id === transaction.id) {
-          return transaction
+          return transaction;
         } else {
-          return transactionItem
+          return transactionItem;
         }
       })
-    }
+    };
   })
 
 );
@@ -85,12 +85,12 @@ export const getCumulativeCashflow = createSelector(
   (state: TransactionState) => {
     if (state.transactions.length > 0) {
       const cashFlow = state.transactions.map(transaction => transaction.value).reduce((prev, next) => prev + next);
-      return cashFlow/100
+      return cashFlow / 100;
     } else {
       return null;
     }
   }
-)
+);
 
 export const isLoading = createSelector(
   getStockFeatureState,
@@ -103,9 +103,8 @@ export const getTransactionById = (id: number) =>
       state.transactions.filter(transaction => {
         return transaction.id === id;
       })
-    )
-  })
-
+    );
+  });
 
 export function reducer(
   state: TransactionState | undefined,

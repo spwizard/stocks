@@ -19,27 +19,27 @@ export class TransactionFormComponent implements OnInit {
 
   @Input()
   set transaction(transaction: Transaction) {
-    this._transaction = transaction
+    this._transaction = transaction;
     if (transaction) {
       this.isEdit = true;
       this.setFormMode();
       this.buildTransactionForm();
     }
   }
-  get transaction() {
+  get transaction(): Transaction {
     return this._transaction;
   }
 
   @Input()
   set isEdit(isEdit: boolean) {
-    this._isEdit = isEdit
+    this._isEdit = isEdit;
     if (!isEdit) {
       this.transaction = null;
       this.setFormMode();
       this.buildTransactionForm();
     }
   }
-  get isEdit() {
+  get isEdit(): boolean {
     return this._isEdit;
   }
 
@@ -59,30 +59,30 @@ export class TransactionFormComponent implements OnInit {
     this.setFormMode();
   }
 
-  onSubmit() {
+  onSubmit(): void {
     const transactionFormState = {
       transaction: this.buildTransaction(this.transactionForm.value),
       isEdit: this.isEdit
-    }
-    this.transactionFormState.emit(transactionFormState)
+    };
+    this.transactionFormState.emit(transactionFormState);
   }
 
-  buildTransactionForm() {
+  buildTransactionForm(): void {
     this.transactionForm = this.fb.group({
       date: [this.isEdit ? this.transaction.date.substring(0, 10) : null],
       type: [this.isEdit ? this.transaction.type : null],
       security: [this.isEdit ? this.transaction.security : null],
       shares: [this.isEdit ? this.transaction.shares : null],
-      value: [this.isEdit ? this.transaction.value/100 : null],
+      value: [this.isEdit ? this.transaction.value / 100 : null],
       cashflow: [this.isEdit ? this.transaction.cashflow : null],
       id: [this.isEdit ? this.transaction.id : null]
-    })
+    });
   }
 
-  buildTransaction(transaction) {
+  buildTransaction(transaction): Transaction {
     // Remove id as api returns error if passed on adding new transaction
     if (!this.isEdit) {
-      delete transaction.id
+      delete transaction.id;
     }
 
     return {
@@ -90,11 +90,10 @@ export class TransactionFormComponent implements OnInit {
       value: transaction.value * 100,
       cashflow: (transaction.type === 'buy' || transaction.type === ' withdrawal')
         ? -Math.abs(transaction.value) * 100 : transaction.value * 100
-    }
+    };
   }
 
-  setFormMode() {
-    this.formMode = this.isEdit ? 'Edit Transaction' : 'Add Transaction'
+  setFormMode(): void  {
+    this.formMode = this.isEdit ? 'Edit Transaction' : 'Add Transaction';
   }
-
 }

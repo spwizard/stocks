@@ -8,21 +8,19 @@ import { Transaction } from 'src/app/store/models/transaction.model';
 })
 
 export class StockTableComponent implements OnInit {
-    @Input() transactions: Transaction[]
+    @Input() transactions: Transaction[];
     @Input() cumulativeCashflow: number;
     @Output() deleteTransaction = new EventEmitter<Transaction>();
     @Output() editTransaction = new EventEmitter<Transaction>();
     constructor() { }
 
-    ngOnInit() { }
+    ngOnInit(): void { }
 
-    onDelete(transaction: Transaction) {
+    onDelete(transaction: Transaction): void {
         this.deleteTransaction.emit(transaction);
     }
 
-    onEdit(transaction: Transaction) {
+    onEdit(transaction: Transaction): void {
         this.editTransaction.emit(transaction);
     }
-
-    
 }

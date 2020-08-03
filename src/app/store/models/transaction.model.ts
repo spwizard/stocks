@@ -6,10 +6,9 @@ export interface Transaction {
   value: number;
   security: string;
   shares: number;
-  
 }
 
 export interface TransactionApiResponse {
-  transactions: Transaction[]
+  transactions: Transaction[];
 }
 

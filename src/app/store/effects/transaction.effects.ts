@@ -30,25 +30,25 @@ export class TransactionEffects {
           catchError(() => EMPTY)
         );
     })
-  ))
+  ));
 
   deleteTransaction$ = createEffect(() => this.actions$.pipe(
     ofType(TransactionActions.deleteTransaction),
     mergeMap(({ transaction }) => {
-      const removedTransaction = transaction
+      const removedTransaction = transaction;
       return this.transactionService
         .deleteTransaction(transaction.id)
         .pipe(
           map(() => TransactionActions.deleteTransactionSuccess({ transaction: removedTransaction }))
-        )
+        );
     }),
-  ))
+    catchError(() => EMPTY)
+  ));
 
   addTransaction$ = createEffect(() =>
     this.actions$.pipe(
       ofType(TransactionActions.addTransaction),
       mergeMap(({ transaction }) => {
-        debugger;
         return this.transactionService.addTransaction(transaction).pipe(
           map((transaction) => {
             return TransactionActions.addTransactionSuccess({ transaction });

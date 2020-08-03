@@ -16,8 +16,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { TransactionEffects } from './store/effects/transaction.effects';
 import { TransactionService } from './services/transaction.service';
 import { HttpClientModule } from '@angular/common/http';
-import { TransactionFormModule } from './components/transaction-form/transaction-form.module'
- 
+import { TransactionFormModule } from './components/transaction-form/transaction-form.module';
 
 @NgModule({
   declarations: [
