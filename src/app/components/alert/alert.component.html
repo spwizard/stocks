@@ -1,1 +1,6 @@
-<div class="alert alert-success" role="role">{{message}}</div>
+<div 
+    *ngIf="message"
+    class="alert"
+    [ngClass]="type" 
+    role="role">{{message}}
+</div> {{type}}

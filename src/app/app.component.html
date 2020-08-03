@@ -1,13 +1,14 @@
 <div class="container">
   <div class="card mt-4">
     <div class="card-body">
-      <app-alert [message]="'test'" [role]="'alert'"></app-alert>
+      <app-alert [message]="alertMessage" [type]="alertType"></app-alert>
+      <div class="spinner-border text-primary" *ngIf="(isLoading$ | async)"></div>
       <app-stock-table 
         [transactions]="(transactionSubscription$ | async)" 
+        [cumulativeCashflow]="(cumulativeCashflow$ | async)"
         (deleteTransaction)="onDelete($event)"
         (editTransaction)="onEdit($event)"
       ></app-stock-table>
-      {{ isLoading$ | async}}
       <app-transaction-form
         (transactionFormState)="onTransactionFormChange($event)"
         [transaction]="editableTransaction" [isEdit]="isEdit">

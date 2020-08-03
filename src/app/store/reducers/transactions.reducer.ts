@@ -7,6 +7,7 @@ import {
 } from '@ngrx/store';
 import { TransactionActions } from '../actions';
 import { Transaction } from '../models/transaction.model';
+import { TransactionFormState } from '../../components/transaction-form/transaction-form.component';
 
 export const stockFeatureKey = 'stockFeature';
 export interface TransactionState {
@@ -37,12 +38,6 @@ const transactionReducer = createReducer(
     };
   }),
 
-  on(TransactionActions.deleteTransaction, (state) => {
-    return {
-      ...state,
-      loading: true
-    };
-  }),
 
   on(TransactionActions.deleteTransactionSuccess, (state, { transaction }) => {
     return {
@@ -51,18 +46,24 @@ const transactionReducer = createReducer(
     };
   }),
 
-  on(TransactionActions.addTransaction, (state, { transaction }) => {
-    return {
-      ...state,
-      loading: true
-    }
-  }),
 
   on(TransactionActions.addTransactionSuccess, (state, { transaction }) => {
     return {
       ...state,
       transactions: [...state.transactions, transaction],
-      loading: false
+    }
+  }),
+
+  on(TransactionActions.updateTransactionSuccess, (state, { transaction }) => {
+    return {
+      ...state,
+      transactions: state.transactions.map((transactionItem) => {
+        if (transactionItem.id === transaction.id) {
+          return transaction
+        } else {
+          return transactionItem
+        }
+      })
     }
   })
 
@@ -78,6 +79,18 @@ export const getTransactions = createSelector(
   getStockFeatureState,
   (state: TransactionState) => state && state.transactions
 );
+
+export const getCumulativeCashflow = createSelector(
+  getStockFeatureState,
+  (state: TransactionState) => {
+    if (state.transactions.length > 0) {
+      const cashFlow = state.transactions.map(transaction => transaction.value).reduce((prev, next) => prev + next);
+      return cashFlow/100
+    } else {
+      return null;
+    }
+  }
+)
 
 export const isLoading = createSelector(
   getStockFeatureState,

@@ -44,3 +44,18 @@ export const addTransactionsFailure = createAction(
     '[Transactions] Add Transaction Failure',
     props<{ error: Error }>()
 );
+
+export const updateTransaction = createAction(
+    '[Transactions] Update Transaction',
+    props<{ transaction: Transaction }>()
+);
+
+export const updateTransactionSuccess = createAction(
+    '[Transactions] Update Transaction Success',
+    props<{ transaction: Transaction }>()
+);
+
+export const updateTransactionsFailure = createAction(
+    '[Transactions] Update Transaction Failure',
+    props<{ error: Error }>()
+);

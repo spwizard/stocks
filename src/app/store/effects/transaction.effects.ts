@@ -45,20 +45,35 @@ export class TransactionEffects {
   ))
 
   addTransaction$ = createEffect(() =>
-  this.actions$.pipe(
-    ofType(TransactionActions.addTransaction),
-    mergeMap(({ transaction }) =>
-      {
+    this.actions$.pipe(
+      ofType(TransactionActions.addTransaction),
+      mergeMap(({ transaction }) => {
+        debugger;
         return this.transactionService.addTransaction(transaction).pipe(
           map((transaction) => {
             return TransactionActions.addTransactionSuccess({ transaction });
           })
         );
       }
-    ),
-    catchError(() => EMPTY)
-  )
-);
+      ),
+      catchError(() => EMPTY)
+    )
+  );
+
+  updateTransaction$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(TransactionActions.updateTransaction),
+      mergeMap(({ transaction }) => {
+        return this.transactionService.updateTransaction(transaction).pipe(
+          map((transaction) => {
+            return TransactionActions.updateTransactionSuccess({ transaction });
+          })
+        );
+      }
+      ),
+      catchError(() => EMPTY)
+    )
+  );
 
   constructor(
     private actions$: Actions,

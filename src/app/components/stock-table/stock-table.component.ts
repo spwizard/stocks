@@ -9,6 +9,7 @@ import { Transaction } from 'src/app/store/models/transaction.model';
 
 export class StockTableComponent implements OnInit {
     @Input() transactions: Transaction[]
+    @Input() cumulativeCashflow: number;
     @Output() deleteTransaction = new EventEmitter<Transaction>();
     @Output() editTransaction = new EventEmitter<Transaction>();
     constructor() { }

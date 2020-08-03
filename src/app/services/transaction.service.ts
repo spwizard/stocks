@@ -19,4 +19,8 @@ export class TransactionService {
   addTransaction(data: Transaction): Observable<Transaction>{
     return this.http.post<Transaction>(`api/v1/transactions`, data);
   }
+
+  updateTransaction(data: Transaction): Observable<Transaction>{
+    return this.http.put<Transaction>(`api/v1/transactions/${data.id}`, data);
+  }
 }
