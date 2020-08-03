@@ -2,7 +2,16 @@
   <div class="card mt-4">
     <div class="card-body">
       <app-alert [message]="'test'" [role]="'alert'"></app-alert>
-      <app-stock-table></app-stock-table>
+      <app-stock-table 
+        [transactions]="(transactionSubscription$ | async)" 
+        (deleteTransaction)="onDelete($event)"
+        (editTransaction)="onEdit($event)"
+      ></app-stock-table>
+      {{ isLoading$ | async}}
+      <app-transaction-form
+        (transactionFormState)="onTransactionFormChange($event)"
+        [transaction]="editableTransaction" [isEdit]="isEdit">
+      </app-transaction-form>
     </div>
   </div>
 </div>
