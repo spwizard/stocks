@@ -67,6 +67,11 @@ export class TransactionFormComponent implements OnInit {
     this.transactionFormState.emit(transactionFormState);
   }
 
+  resetForm(): void {
+    this.isEdit = false;
+    this.setFormMode();
+  }
+
   buildTransactionForm(): void {
     this.transactionForm = this.fb.group({
       date: [this.isEdit ? this.transaction.date.substring(0, 10) : null],

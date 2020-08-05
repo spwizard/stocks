@@ -21,7 +21,7 @@
       <td class="text-right"><span class="text-muted">{{transaction.shares || 'N/A'}}</span></td>
       <td class="text-right">{{(transaction.value/100) | currency: 'GBP' }}</td>
       <td class="text-right" [ngClass]="transaction.cashflow > 0 ? 'text-success' : 'text-danger'">{{(transaction.cashflow/100) | currency: 'GBP'}}</td>
-      <td class="text-right"><a href="#" (click)="onEdit(transaction)">Edit</a></td>
+      <td class="text-right"><a href="#" (click)="$event.preventDefault(); onEdit(transaction)">Edit</a></td>
       <td class="text-right"><a href="#" (click)="onDelete(transaction)">Delete</a></td></tr>
   </tbody>
   <tfoot>

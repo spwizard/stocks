@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, ComponentRef, ElementRef, OnInit, ViewChild} from '@angular/core';
 import * as fromTransactions from './store/reducers/transactions.reducer';
 import { TransactionActions } from './store/actions';
 import { Store, select } from '@ngrx/store';
 import { Subscription, Observable } from 'rxjs';
 import { Transaction } from './store/models/transaction.model';
-import { TransactionFormState } from './components/transaction-form/transaction-form.component';
+import {TransactionFormComponent, TransactionFormState} from './components/transaction-form/transaction-form.component';
 import { Actions, ofType } from '@ngrx/effects';
 import { tap } from 'rxjs/operators';
 import { Alert, AlertMessage } from './store/models/alert.model';
@@ -25,6 +25,8 @@ export class AppComponent implements OnInit {
   alertMessage: string;
   cumulativeCashflow$: Observable<number>;
 
+  @ViewChild(TransactionFormComponent, { read: ElementRef }) transactionForm: ElementRef;
+
   constructor(
     private store: Store<fromTransactions.TransactionState>,
     private actions$: Actions,
@@ -36,7 +38,7 @@ export class AppComponent implements OnInit {
     this.transactionSubscription$ = this.store.pipe(select(fromTransactions.getTransactions));
     this.isLoading$ = this.store.pipe(select(fromTransactions.isLoading));
     this.cumulativeCashflow$ = this.store.pipe(select(fromTransactions.getCumulativeCashflow));
-    
+
     this.actionSuccess$  = this.actions$.pipe(
       ofType(
         TransactionActions.addTransactionSuccess,
@@ -54,6 +56,7 @@ export class AppComponent implements OnInit {
   onEdit(transaction: Transaction): void {
     this.isEdit = true;
     this.editableTransaction = transaction;
+    this.transactionForm.nativeElement.scrollIntoView({behavior: 'smooth'});
   }
 
   onTransactionFormChange(transactionFormState: TransactionFormState): void{
