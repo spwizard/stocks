@@ -13,7 +13,7 @@ describe('TransactionFormComponent', () => {
     value: 123,
     security: 'BT',
     shares: 123
-  }
+  };
   beforeEach(() => {
     const formBuilderStub = () => ({ group: object => ({}) });
     TestBed.configureTestingModule({

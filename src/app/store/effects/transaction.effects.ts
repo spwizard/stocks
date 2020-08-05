@@ -50,9 +50,7 @@ export class TransactionEffects {
       ofType(TransactionActions.addTransaction),
       mergeMap(({ transaction }) => {
         return this.transactionService.addTransaction(transaction).pipe(
-          map((transaction) => {
-            return TransactionActions.addTransactionSuccess({ transaction });
-          })
+          map((transaction) => TransactionActions.addTransactionSuccess({ transaction }))
         );
       }
       ),

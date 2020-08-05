@@ -31,7 +31,6 @@ export class AppComponent implements OnInit {
     private store: Store<fromTransactions.TransactionState>,
     private actions$: Actions,
   ) {
-    
   }
 
   ngOnInit(): void {

@@ -17,7 +17,5 @@ describe('AlertComponent', () => {
 
   it('can load instance', () => {
     expect(component).toBeTruthy();
-  });
-
-  
+  });  
 });

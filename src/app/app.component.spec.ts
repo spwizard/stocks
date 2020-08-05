@@ -25,7 +25,7 @@ describe('AppComponent', () => {
     value: 1,
     security: 'BT',
     shares: 1
-  }
+  };
 
 
   const initialState = {};
@@ -75,38 +75,38 @@ describe('AppComponent', () => {
       const expectedAction = TransactionActions.getTransactions();
       component.ngOnInit();
       expect(store.dispatch).toHaveBeenCalledWith(expectedAction);
-    })
+    });
 
     it('should subscribe to transactions', () => {
       let result = null;
       component.ngOnInit();
       component.transactionSubscription$.subscribe(t => result = t);
       expect(result).toEqual([]);
-    })
+    });
 
     it('should subscribe to loading', () => {
       let result = null;
       component.ngOnInit();
       component.isLoading$.subscribe(t => result = t);
       expect(result).toEqual(true);
-    })
+    });
 
     it('should subscribe to cumulative cashflow', () => {
       let result = null;
       component.ngOnInit();
       component.cumulativeCashflow$.subscribe(t => result = t);
       expect(result).toEqual(1000);
-    })
-  })
+    });
+  });
 
   it('should dispatch a delete action on delete', () => {
       const store = TestBed.inject(Store);
       spyOn(store, 'dispatch');
       const expectedAction = TransactionActions.deleteTransaction({transaction: mockTransaction});
 
-      component.onDelete(mockTransaction)
+      component.onDelete(mockTransaction);
       expect(store.dispatch).toHaveBeenCalledWith(expectedAction);
-  })
+  });
 
   describe('should set up a transaction for edit', () => {
 
@@ -114,14 +114,14 @@ describe('AppComponent', () => {
       fixture.detectChanges();
       component.onEdit(mockTransaction);
       expect(component.isEdit).toBe(true);
-    })
+    });
 
     it('should pass transaction to editable transaction', () => {
       fixture.detectChanges();
       component.onEdit(mockTransaction);
-      expect(component.editableTransaction).toEqual(mockTransaction)
-    })
+      expect(component.editableTransaction).toEqual(mockTransaction);
+    });
 
-  })
+  });
 
 });

@@ -16,7 +16,7 @@ export class StockTableComponent implements OnInit {
 
   ngOnInit(): void { }
 
-  onDelete(transaction: Transaction) {
+  onDelete(transaction: Transaction): void {
     this.deleteTransaction.emit(transaction);
   }
 

@@ -12,10 +12,8 @@ describe('StockTableComponent', () => {
     });
     fixture = TestBed.createComponent(StockTableComponent);
     component = fixture.componentInstance;
-  });
-  
+  });  
   it('can load instance', () => {
     expect(component).toBeTruthy();
   });
-
 });
