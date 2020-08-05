@@ -13,7 +13,7 @@ describe('TransactionFormComponent', () => {
     value: 123,
     security: 'BT',
     shares: 123
-  };
+  }
   beforeEach(() => {
     const formBuilderStub = () => ({ group: object => ({}) });
     TestBed.configureTestingModule({
@@ -40,16 +40,6 @@ describe('TransactionFormComponent', () => {
       component.ngOnInit();
       expect(component.buildTransactionForm).toHaveBeenCalled();
       expect(component.setFormMode).toHaveBeenCalled();
-    });
-  });
-
-  xdescribe('onSubmit', () => {
-    it('makes expected calls', () => {
-      component.transaction = mockTransaction;
-      component.buildTransactionForm();
-      spyOn(component, 'buildTransaction').and.callThrough();
-      component.onSubmit();
-      expect(component.buildTransaction).toHaveBeenCalled();
     });
   });
 

@@ -1,32 +1,50 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { Store, Action } from '@ngrx/store';
-import { Transaction } from './store/models/transaction.model';
-import { TransactionFormState } from './components/transaction-form/transaction-form.component';
-import { Actions } from '@ngrx/effects';
-import { AppComponent } from './app.component';
-import { TransactionActions } from './store/actions';
-import { TransactionState } from './store/reducers/transactions.reducer';
-import { provideMockStore, MockStore } from '@ngrx/store/testing';
-import { provideMockActions } from '@ngrx/effects/testing';
-import { Observable } from 'rxjs';
 import * as fromTransactions from './store/reducers/transactions.reducer';
+import { Action, Store } from '@ngrx/store';
+import { AppComponent } from './app.component';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MockStore, provideMockStore } from '@ngrx/store/testing';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { Observable } from 'rxjs';
+import { provideMockActions } from '@ngrx/effects/testing';
+import { TransactionActions } from './store/actions';
+import { TransactionFormComponent } from './components/transaction-form/transaction-form.component';
+
+
 describe('AppComponent', () => {
   let component: AppComponent;
   let fixture: ComponentFixture<AppComponent>;
   let store: MockStore;
   let actions$: Observable<Action>;
-  const initialState = { };
+
+  const mockTransaction = {
+    cashflow: 1,
+    date: '12/1/2020',
+    id: 1,
+    type: 'sell',
+    value: 1,
+    security: 'BT',
+    shares: 1
+  }
+
+
+  const initialState = {};
   beforeEach(() => {
     TestBed.configureTestingModule({
+      imports: [
+        ReactiveFormsModule,
+        FormsModule,
+      ],
       schemas: [NO_ERRORS_SCHEMA],
-      declarations: [AppComponent],
+      declarations: [AppComponent, TransactionFormComponent],
       providers: [
         provideMockStore(
-          { 
+          {
             initialState: initialState,
             selectors: [
               { selector: fromTransactions.getTransactions, value: [] },
+              { selector: fromTransactions.isLoading, value: true },
+              { selector: fromTransactions.getCumulativeCashflow, value: 1000 },
             ]
           }),
         provideMockActions(() => actions$)
@@ -53,22 +71,57 @@ describe('AppComponent', () => {
     it('should dispatch get transactions', () => {
       const store = TestBed.inject(Store);
       spyOn(store, 'dispatch');
-  
+
       const expectedAction = TransactionActions.getTransactions();
       component.ngOnInit();
       expect(store.dispatch).toHaveBeenCalledWith(expectedAction);
     })
 
     it('should subscribe to transactions', () => {
-      const store = TestBed.inject(Store);
-      spyOn(store, 'pipe');
+      let result = null;
+      component.ngOnInit();
+      component.transactionSubscription$.subscribe(t => result = t);
+      expect(result).toEqual([]);
+    })
 
-      const expectedSelector = fromTransactions.getTransactions
+    it('should subscribe to loading', () => {
+      let result = null;
+      component.ngOnInit();
+      component.isLoading$.subscribe(t => result = t);
+      expect(result).toEqual(true);
+    })
 
-      expect(store.pipe).toHaveBeenCalledWith(expectedSelector);
+    it('should subscribe to cumulative cashflow', () => {
+      let result = null;
+      component.ngOnInit();
+      component.cumulativeCashflow$.subscribe(t => result = t);
+      expect(result).toEqual(1000);
     })
   })
 
-  it
+  it('should dispatch a delete action on delete', () => {
+      const store = TestBed.inject(Store);
+      spyOn(store, 'dispatch');
+      const expectedAction = TransactionActions.deleteTransaction({transaction: mockTransaction});
+
+      component.onDelete(mockTransaction)
+      expect(store.dispatch).toHaveBeenCalledWith(expectedAction);
+  })
+
+  describe('should set up a transaction for edit', () => {
+
+    it('should set edit mode', () => {
+      fixture.detectChanges();
+      component.onEdit(mockTransaction);
+      expect(component.isEdit).toBe(true);
+    })
+
+    it('should pass transaction to editable transaction', () => {
+      fixture.detectChanges();
+      component.onEdit(mockTransaction);
+      expect(component.editableTransaction).toEqual(mockTransaction)
+    })
+
+  })
 
 });
