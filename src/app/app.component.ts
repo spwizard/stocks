@@ -31,10 +31,11 @@ export class AppComponent implements OnInit {
     private store: Store<fromTransactions.TransactionState>,
     private actions$: Actions,
   ) {
-    this.store.dispatch(TransactionActions.getTransactions());
+    
   }
 
   ngOnInit(): void {
+    this.store.dispatch(TransactionActions.getTransactions());
     this.transactionSubscription$ = this.store.pipe(select(fromTransactions.getTransactions));
     this.isLoading$ = this.store.pipe(select(fromTransactions.isLoading));
     this.cumulativeCashflow$ = this.store.pipe(select(fromTransactions.getCumulativeCashflow));
